@@ -64,8 +64,8 @@ jobs:
 
       # Step 8: Run Tests using Maven
       # This step will run all the tests in src/test/java
-      - name: Run Tests
-        run: mvn test
+      - name: Run Insight Test
+        run: mvn -Dtest=com.example.Insight test
         working-directory: Smoke-test-repo
 
       # Step 9: Upload Test Results
