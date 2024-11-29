@@ -25,7 +25,7 @@ public class Insight{
     @BeforeClass
     public void setUp() {
         // Set up ChromeDriver using WebDriverManager
-        WebDriverManager.chromedriver().driverVersion("129.0.6778.89").setup();
+        WebDriverManager.chromedriver().driverVersion("131.0.6778.85").setup();
 
         // Set up Chrome options
         ChromeOptions options = new ChromeOptions();
@@ -34,7 +34,7 @@ public class Insight{
         options.addArguments("--disable-dev-shm-usage"); // Avoid issues with shared memory in Docker or CI
         options.addArguments("--remote-debugging-port=9222"); // Optional: useful for debugging
         options.addArguments("--disable-gpu"); // Disable GPU acceleration for headless mode
-
+        options.addArguments("--disable-software-rasterizer");
         // Initialize ChromeDriver with options
         driver = new ChromeDriver(options);
 
