@@ -57,10 +57,6 @@ jobs:
          sudo apt-get install -y wget unzip
          sudo apt-get install -y google-chrome-stable
 
-          - name: Set up Chrome
-            uses: browser-actions/setup-chrome@v2
-            with: null
-            chrome-version: 131.0.6778.85
   
             - name: Set up WebDriver
               uses: browser-actions/setup-chromedriver@v2
