@@ -57,13 +57,6 @@ jobs:
          sudo apt-get install -y wget unzip
          sudo apt-get install -y google-chrome-stable
 
-         - name: Set up WebDriver
-           run: |
-           wget https://chromedriver.storage.googleapis.com/131.0.6778.85/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-         sudo chmod +x /usr/local/bin/chromedriver
-
 
       # Step 8: Run Tests using Maven
       # This step will run all the tests in src/test/java
