@@ -62,9 +62,10 @@ jobs:
           sudo mv chromedriver /usr/local/bin/
           sudo chmod +x /usr/local/bin/chromedriver
 
-      # Step 8: Run Insight Java Test
-      - name: Run Insight Java Test
-        run: mvn exec:java -Dexec.mainClass="Insight"  # Adjust based on your class structure
+      # Step 8: Run Tests using Maven
+      # This step will run all the tests in src/test/java
+      - name: Run Tests
+        run: mvn test
         working-directory: Smoke-test-repo
 
       # Step 9: Upload Test Results
