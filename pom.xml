@@ -95,7 +95,7 @@
                     <execution>
                         <configuration>
                             <includes>
-                                <include>**/InsightTest.java</include> <!-- Ensure the test class is included -->
+                                <include>**/Insighgit.java</include> <!-- Ensure the test class is included -->
                             </includes>
                         </configuration>
                     </execution>
