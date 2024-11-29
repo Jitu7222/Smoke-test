@@ -17,6 +17,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Step 2: Checkout Smoke-test Repository
       - name: Checkout Smoke-test Repository
         uses: actions/checkout@v3
         with:
@@ -24,7 +25,6 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}  # Use the secret token for authentication
           path: Smoke-test-repo  # Directory where the Smoke-test repo will be checked out
           ref: main1  # Explicitly specify the branch name
-
 
       # Step 3: Set up JDK 11
       - name: Set up JDK 11
@@ -38,7 +38,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('smoke-test-repo/**/pom.xml') }}  # Reference pom.xml from Smoke-test repo
+          key: ${{ runner.os }}-maven-${{ hashFiles('Smoke-test-repo/**/pom.xml') }}  # Reference pom.xml from Smoke-test repo
           restore-keys: |
             ${{ runner.os }}-maven-
 
@@ -46,14 +46,32 @@ jobs:
       - name: Install dependencies
         run: mvn clean install -DskipTests
 
-      # Step 6: Run Selenium Test Automation (TestNG)
-      - name: Run Selenium Test Automation
-        run: mvn test
+      # Step 6: Install dependencies for Smoke-test repo (Optional, if separate dependencies are needed)
+      - name: Install dependencies for Smoke-test repo
+        run: mvn clean install -DskipTests
+        working-directory: Smoke-test-repo
 
-      # Step 7: Upload Test Results (specify the XML files)
+      # Step 7: Install Chromium and ChromeDriver
+      - name: Install Chromium and ChromeDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
+          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+
+      # Step 8: Run Tests using Maven
+      # This step will run all the tests in src/test/java
+      - name: Run Tests
+        run: mvn test
+        working-directory: Smoke-test-repo
+
+      # Step 9: Upload Test Results
       - name: Upload TestNG Results
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: target/surefire-reports/*.xml  # Adjust according to the location of the results
+          path: Smoke-test-repo/target/surefire-reports/*.xml  # Adjust according to the location of the results
