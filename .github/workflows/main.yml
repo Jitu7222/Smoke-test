@@ -50,17 +50,19 @@ jobs:
       - name: Install dependencies for Smoke-test repo
         run: mvn clean install -DskipTests
         working-directory: Smoke-test-repo
-
-      # Step 7: Install Chromium and ChromeDriver
-      - name: Install Chromium and ChromeDriver
+        
+      - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
-          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
+         sudo apt-get update
+         sudo apt-get install -y wget unzip
+         sudo apt-get install -y google-chrome-stable
+
+      - name: Install ChromeDriver
+        run: |
+         wget https://chromedriver.storage.googleapis.com/113.0.5672.63/chromedriver_linux64.zip
+         unzip chromedriver_linux64.zip
+         sudo mv chromedriver /usr/local/bin/chromedriver
+         sudo chmod +x /usr/local/bin/chromedriver
 
       # Step 8: Run Tests using Maven
       # This step will run all the tests in src/test/java
