@@ -35,6 +35,7 @@ public class Insight{
 //options.addArguments("--remote-debugging-port=9222"); // Optional: useful for debugging
         options.addArguments("--disable-gpu"); // Disable GPU acceleration for headless mode
         options.addArguments("--disable-software-rasterizer");
+        options.addArguments("--disable-dev-tools");
         // Initialize ChromeDriver with options
         driver = new ChromeDriver(options);
 
