@@ -13,51 +13,44 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout Code
+      # Step 1: Checkout the main repository code
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Set up JDK 17 with distribution specified
+      # Step 2: Checkout the Smoke-test repository
+      - name: Checkout Smoke-test Repository
+        uses: actions/checkout@v3
+        with:
+          repository: user/Smoke-test  # Replace with the correct repository name
+          path: smoke-test-repo  # The directory where the Smoke-test repo will be checked out
+
+      # Step 3: Set up JDK 11
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
           java-version: '11'
 
-      # Step 3: Cache Maven dependencies
+      # Step 4: Cache Maven dependencies using the pom.xml in the Smoke-test repository
       - name: Cache Maven dependencies
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('smoke-test-repo/**/pom.xml') }}  # Reference pom.xml from Smoke-test repo
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Step 4: Install dependencies
+      # Step 5: Install dependencies (from the main repository)
       - name: Install dependencies
         run: mvn clean install -DskipTests
-
-      # Step 5: Set up Chrome and ChromeDriver
-      - name: Set up Chrome and ChromeDriver
-        run: |
-          # Install Google Chrome
-          sudo apt-get update -y
-          sudo apt-get install -y google-chrome-stable
-
-          # Install the correct version of ChromeDriver based on the installed Chrome version
-          CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}' | sed 's/\.[0-9]*$//') # Get Chrome version (e.g., 116)
-          LATEST_CHROME_DRIVER=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-          wget https://chromedriver.storage.googleapis.com/$LATEST_CHROME_DRIVER/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
 
       # Step 6: Run Selenium Test Automation (TestNG)
       - name: Run Selenium Test Automation
         run: mvn test
 
-      # Step 7: Upload Test Results (if you are using TestNG)
+      # Step 7: Upload Test Results (specify the XML files)
       - name: Upload TestNG Results
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: target/test-*.xml
+          path: target/surefire-reports/*.xml  # Adjust according to the location of the results
