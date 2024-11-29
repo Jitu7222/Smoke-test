@@ -93,11 +93,10 @@
                 <version>3.0.0</version>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
                         <configuration>
-                            <mainClass>insight</mainClass> <!-- Class name without a package -->
+                            <includes>
+                                <include>**/InsightTest.java</include> <!-- Ensure the test class is included -->
+                            </includes>
                         </configuration>
                     </execution>
                 </executions>
