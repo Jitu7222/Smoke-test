@@ -17,12 +17,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Checkout the Smoke-test repository
       - name: Checkout Smoke-test Repository
         uses: actions/checkout@v3
         with:
           repository: user/Smoke-test  # Replace with the correct repository name
-          path: smoke-test-repo  # The directory where the Smoke-test repo will be checked out
+          token: ${{ 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 }}  # Use the secret token for authentication
+          path: smoke-test-repo  
 
       # Step 3: Set up JDK 11
       - name: Set up JDK 11
