@@ -1,0 +1,50 @@
+name: Java Selenium Test Automation
+
+on:
+  push:
+    branches:
+      - main1
+  pull_request:
+    branches:
+      - main1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up JDK 17
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      # Step 3: Cache Maven dependencies
+      - name: Cache Maven dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # Step 4: Install Dependencies (mvn clean install)
+      - name: Install dependencies
+        run: mvn clean install -DskipTests
+
+      # Step 5: Run Selenium Test Automation (TestNG)
+      - name: Run Selenium Test Automation
+        run: mvn test
+
+      # Step 6: Upload Test Results (if you are using TestNG)
+      - name: Upload TestNG Results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: target/test-*.xml
+
