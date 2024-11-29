@@ -25,7 +25,7 @@ public class Insight{
     @BeforeClass
     public void setUp() {
         // Set up ChromeDriver using WebDriverManager
-        WebDriverManager.chromedriver().driverVersion("131.0.6778.85").setup();
+        WebDriverManager.chromedriver().driverVersion("129.0.6778.89").setup();
 
         // Set up Chrome options
         ChromeOptions options = new ChromeOptions();
