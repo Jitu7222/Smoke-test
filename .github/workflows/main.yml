@@ -20,7 +20,7 @@ jobs:
       - name: Checkout Smoke-test Repository
         uses: actions/checkout@v3
         with:
-          repository: Jitu722/Smoke-test  # Replace with the correct repository name
+          repository: Jitu7222/Smoke-test  # Replace with the correct repository name
           token: ${{ secrets.GH_TOKEN }}  # Use the secret token for authentication
           path: Smoke-test-repo  # Directory where the Smoke-test repo will be checked out
           ref: main1  # Explicitly specify the branch name
