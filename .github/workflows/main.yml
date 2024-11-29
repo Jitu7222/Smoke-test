@@ -51,11 +51,16 @@ jobs:
         run: mvn clean install -DskipTests
         working-directory: Smoke-test-repo
 
-      # Step 7: Set up ChromeDriver
-      - name: Set up ChromeDriver
-        uses: actions/setup-chromium@v2
-        with:
-          chromedriver-version: 114.0.5735.90
+      # Step 7: Install Chromium and ChromeDriver
+      - name: Install Chromium and ChromeDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
+          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
 
       # Step 8: Run Insight Java Test
       - name: Run Insight Java Test
