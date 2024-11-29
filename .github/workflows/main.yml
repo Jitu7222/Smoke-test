@@ -20,9 +20,11 @@ jobs:
       - name: Checkout Smoke-test Repository
         uses: actions/checkout@v3
         with:
-          repository: user/Smoke-test  # Replace with the correct repository name
+          repository: Jitu722/Smoke-test  # Replace with the correct repository name
           token: ${{ secrets.GH_TOKEN }}  # Use the secret token for authentication
-          path: Smoke-test-repo 
+          path: Smoke-test-repo  # Directory where the Smoke-test repo will be checked out
+          ref: main1  # Explicitly specify the branch name
+
 
       # Step 3: Set up JDK 11
       - name: Set up JDK 11
