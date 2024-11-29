@@ -59,14 +59,14 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>3.141.59</version> <!-- Use the latest version -->
+            <version>4.10.0</version> <!-- Use the latest version -->
         </dependency>
 
         <!-- WebDriver Support dependency for managing browser windows and events -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
-            <version>3.141.59</version>
+            <version>4.10.0</version>
         </dependency>
 
         <!-- RestAssured -->
