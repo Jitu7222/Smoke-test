@@ -22,7 +22,7 @@ jobs:
         with:
           repository: user/Smoke-test  # Replace with the correct repository name
           token: ${{ secrets.GH_TOKEN }}  # Use the secret token for authentication
-          path: smoke-test-repo 
+          path: Smoke-test-repo 
 
       # Step 3: Set up JDK 11
       - name: Set up JDK 11
