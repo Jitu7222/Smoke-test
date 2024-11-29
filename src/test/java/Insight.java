@@ -13,8 +13,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.Set;
 
 public class Insight{
@@ -24,11 +24,24 @@ public class Insight{
 
     @BeforeClass
     public void setUp() {
-
         // Set up ChromeDriver using WebDriverManager
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+
+        // Set up Chrome options
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless"); // Run Chrome in headless mode
+        options.addArguments("--no-sandbox"); // Required for CI environments
+        options.addArguments("--disable-dev-shm-usage"); // Avoid issues with shared memory in Docker or CI
+        options.addArguments("--remote-debugging-port=9222"); // Optional: useful for debugging
+        options.addArguments("--disable-gpu"); // Disable GPU acceleration for headless mode
+
+        // Initialize ChromeDriver with options
+        driver = new ChromeDriver(options);
+
+        // Set up explicit wait
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // Maximize the window (This might not work in headless mode, but you can use it to ensure compatibility)
         driver.manage().window().maximize();
     }
 
