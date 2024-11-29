@@ -46,9 +46,14 @@ jobs:
       - name: Install dependencies
         run: mvn clean install -DskipTests
 
-      # Step 6: Run Selenium Test Automation (TestNG)
-      - name: Run Selenium Test Automation
-        run: mvn test
+      - name: Set up ChromeDriver
+        uses: actions/setup-chromium@v2
+        with:
+          chromedriver-version: 114.0.5735.90
+
+      - name: Run Insight Java Test
+        run: mvn exec:java -Dexec.mainClass="Insight"  # Adjust based on your class structure
+        working-directory: Smoke-test-repo
 
       # Step 7: Upload Test Results (specify the XML files)
       - name: Upload TestNG Results
