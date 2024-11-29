@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.6.0</version>
+            <version>4.25.0</version>
         </dependency>
 
         <dependency>
@@ -60,14 +60,14 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>4.6.0</version> <!-- Use the latest version -->
+            <version>4.25.0</version> <!-- Use the latest version -->
         </dependency>
 
         <!-- WebDriver Support dependency for managing browser windows and events -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
-            <version>4.6.0</version>
+            <version>4.25.0</version>
         </dependency>
 
         <!-- RestAssured -->
