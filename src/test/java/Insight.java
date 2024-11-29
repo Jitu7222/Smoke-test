@@ -32,7 +32,7 @@ public class Insight{
         options.addArguments("--headless"); // Run Chrome in headless mode
         options.addArguments("--no-sandbox"); // Required for CI environments
         options.addArguments("--disable-dev-shm-usage"); // Avoid issues with shared memory in Docker or CI
-        options.addArguments("--remote-debugging-port=9222"); // Optional: useful for debugging
+        options.addArguments("--remote-debugging-port=9223"); // Optional: useful for debugging
         options.addArguments("--disable-gpu"); // Disable GPU acceleration for headless mode
         options.addArguments("--disable-software-rasterizer");
         // Initialize ChromeDriver with options
