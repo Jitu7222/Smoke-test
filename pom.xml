@@ -16,33 +16,36 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <!-- Latest Selenium Java Dependency -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.25.0</version>
+            <version>4.8.0</version> <!-- Update to latest version -->
         </dependency>
 
+        <!-- WebDriverManager to handle ChromeDriver versioning automatically -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.9.2</version>
+            <version>5.3.0</version> <!-- Use the latest version of WebDriverManager -->
         </dependency>
 
-
+        <!-- SLF4J API for logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.32</version>
         </dependency>
 
+        <!-- SLF4J Simple binding for logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.32</version>  <!-- SLF4J Simple binding -->
+            <version>1.7.32</version> <!-- SLF4J Simple binding -->
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+
+        <!-- TestNG for running tests -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -50,27 +53,28 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ExtentReports for reporting -->
         <dependency>
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>
-            <version>5.0.8</version> <!-- or the latest version -->
+            <version>5.0.8</version> <!-- Latest version of ExtentReports -->
         </dependency>
 
-        <!-- WebDriver for Chrome (other drivers like GeckoDriver for Firefox can be used too) -->
+        <!-- WebDriver for Chrome (to work with ChromeDriver) -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>4.25.0</version> <!-- Use the latest version -->
+            <version>4.8.0</version> <!-- Update to the latest version -->
         </dependency>
 
-        <!-- WebDriver Support dependency for managing browser windows and events -->
+        <!-- Selenium Support for advanced browser interactions -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
-            <version>4.25.0</version>
+            <version>4.8.0</version> <!-- Latest version of Selenium Support -->
         </dependency>
 
-        <!-- RestAssured -->
+        <!-- RestAssured for API Testing -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
@@ -78,10 +82,11 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Async HTTP Client for RestAssured -->
         <dependency>
             <groupId>org.asynchttpclient</groupId>
             <artifactId>async-http-client</artifactId>
-            <version>2.12.3</version> <!-- You can specify the version you need -->
+            <version>2.12.3</version> <!-- Version for RestAssured dependencies -->
         </dependency>
     </dependencies>
 
@@ -91,7 +96,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.0.0-M5</version> <!-- Latest version of Surefire Plugin -->
             </plugin>
         </plugins>
     </build>
