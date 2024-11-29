@@ -25,7 +25,7 @@ public class Insight{
     @BeforeClass
     public void setUp() {
         // Set up ChromeDriver using WebDriverManager
-        WebDriverManager.chromedriver().driverVersion("131.0.6778.85").setup();
+        WebDriverManager.chromedriver().setup();
 
         // Set up Chrome options
         ChromeOptions options = new ChromeOptions();
@@ -36,6 +36,7 @@ public class Insight{
         options.addArguments("--disable-gpu"); // Disable GPU acceleration for headless mode
         options.addArguments("--disable-software-rasterizer");
         options.addArguments("--disable-dev-tools");
+        System.setProperty("org.slf4j.simpleLogger.log.org.openqa.selenium", "error");
         // Initialize ChromeDriver with options
         driver = new ChromeDriver(options);
 
