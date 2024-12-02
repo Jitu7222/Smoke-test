@@ -55,7 +55,7 @@ jobs:
 
       # Step 8: Run the Selenium test for a specific class (replace `com.example.GoogleTest` with your test class)
       - name: Run Selenium Test for GoogleTest
-        run: mvn -Dtest=Testing test
+        run: mvn -Dtest=Insight test
         working-directory: .
 
       # Step 9: Upload test results (optional, if you are using TestNG or Surefire for reporting)
