@@ -3,10 +3,10 @@ name: Java Selenium Test Automation
 on:
   push:
     branches:
-      - main
+      - main1
   pull_request:
     branches:
-      - main
+      - main1
 
 jobs:
   build:
