@@ -43,7 +43,7 @@ public class Insight{
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         // Maximize the window (This might not work in headless mode, but you can use it to ensure compatibility)
-        driver.manage().window().maximize();
+        //driver.manage().window().maximize();
     }
 
     @Test
