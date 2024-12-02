@@ -102,7 +102,7 @@ public class Insight {
         Assert.assertTrue(signInButton.isDisplayed(), "Sign in button is not visible.");
         signInButton.click();
         Thread.sleep(2000); // Sleep for 2 seconds
-    }/*
+    }
 
     @Test(dependsOnMethods = "testSignInButton",alwaysRun = true)
     public void testSwitchBackToOriginalWindow() throws InterruptedException {
@@ -851,7 +851,7 @@ public class Insight {
         usersElement.click();
         Thread.sleep(10000);
     }
-*/
+
     @AfterClass
     public void tearDown() {
         if (driver != null) {
