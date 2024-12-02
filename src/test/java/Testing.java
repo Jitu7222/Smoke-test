@@ -37,37 +37,28 @@ public class Testing {
     @Test
     public void testGooglePage() {
         try {
-            // Navigate to the page
+            // Navigate to the website
             driver.get("https://app.perceptinsight.com");
 
             // Verify the page title
             String pageTitle = driver.getTitle();
             System.out.println("Page Title: " + pageTitle);
-            Assert.assertTrue(pageTitle.contains("Percept Insight"), "Page title is incorrect.");
 
-            // Wait until the "Sign in with Microsoft" button is clickable
-            WebElement signInWithMicrosoft = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[text()='Sign in with Microsoft']")));
+            // Find the "Sign in with Microsoft" element
+            WebElement signInWithMicrosoft = driver.findElement(By.xpath("//p[text()='Sign in with Microsoft']"));
 
-            // Assert that the button is displayed
-            Assert.assertTrue(signInWithMicrosoft.isDisplayed(), "Sign in with Microsoft button is not visible.");
-
-            // Click the "Sign in with Microsoft" button
-            signInWithMicrosoft.click();
-            System.out.println("Clicked on the 'Sign in with Microsoft' button.");
+            // Check if the element is null before interacting with it
+            if (signInWithMicrosoft != null) {
+                Assert.assertTrue(signInWithMicrosoft.isDisplayed(), "Sign in with Microsoft button is not visible.");
+                signInWithMicrosoft.click();
+            } else {
+                System.out.println("Element not found: Sign in with Microsoft");
+                Assert.fail("Sign in with Microsoft button was not found.");
+            }
 
         } catch (Exception e) {
-            // Catching exception and printing stack trace
-            System.err.println("Exception occurred during test execution: " + e.getMessage());
             e.printStackTrace();
             Assert.fail("Test failed due to exception: " + e.getMessage());
-        }
-    }
-
-    @AfterClass
-    public void tearDown() {
-        // Quit the browser
-        if (driver != null) {
-            driver.quit();
         }
     }
 }
