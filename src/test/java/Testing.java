@@ -1,3 +1,4 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,6 +13,9 @@ public class Testing {
 
     @BeforeClass
     public void setup() {
+        // Use WebDriverManager to automatically download and set up ChromeDriver
+        WebDriverManager.chromedriver().setup();
+
         // Set up Chrome options
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");  // Run Chrome in headless mode
@@ -20,10 +24,7 @@ public class Testing {
         options.addArguments("--disable-gpu");  // Disable GPU acceleration for headless mode
         options.addArguments("--disable-software-rasterizer");
 
-        // Set system property for ChromeDriver
-        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
-
-        // Initialize WebDriver
+        // Initialize WebDriver with the options
         driver = new ChromeDriver(options);
     }
 
