@@ -53,9 +53,9 @@ jobs:
       - name: Set up WebDriver Manager
         run: mvn dependency:resolve
 
-      # Step 8: Run the Selenium test
-      - name: Run Selenium Test
-        run: mvn -Dtest=Tesing test
+      # Step 8: Run the Selenium test for a specific class (replace `com.example.GoogleTest` with your test class)
+      - name: Run Selenium Test for GoogleTest
+        run: mvn -Dtest=Testing test
         working-directory: .
 
       # Step 9: Upload test results (optional, if you are using TestNG or Surefire for reporting)
