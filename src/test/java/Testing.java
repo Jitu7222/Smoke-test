@@ -32,7 +32,7 @@ public class Testing {
     public void testGooglePage() {
         try {
             // Navigate to Google
-            driver.get("https://www.google.com");
+            driver.get("https://app.perceptinsight.com");
 
             // Verify the page title
             String pageTitle = driver.getTitle();
