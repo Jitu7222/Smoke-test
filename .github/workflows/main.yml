@@ -13,68 +13,55 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the main repository code
+      # Step 1: Checkout the code from the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Checkout Smoke-test Repository
-      - name: Checkout Smoke-test Repository
-        uses: actions/checkout@v3
-        with:
-          repository: Jitu7222/Smoke-test  # Replace with the correct repository name
-          token: ${{ secrets.GH_TOKEN }}  # Use the secret token for authentication
-          path: Smoke-test-repo  # Directory where the Smoke-test repo will be checked out
-          ref: main1  # Explicitly specify the branch name
-
-      # Step 3: Set up JDK 11
+      # Step 2: Set up JDK 11 (or choose the JDK version you prefer)
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '11.0.24'
-          distribution: 'temurin'
+          java-version: '11'
+          distribution: 'temurin'  # You can choose other distributions like 'zulu' or 'adoptopenjdk'
 
-      # Step 4: Cache Maven dependencies using the pom.xml in the Smoke-test repository
+      # Step 3: Install dependencies for headless Chrome
+      - name: Install dependencies for headless Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget curl unzip
+          sudo apt-get install -y google-chrome-stable
+          sudo apt-get install -y libnss3 libgconf-2-4 libgdk-pixbuf2.0-0 libasound2 libx11-xcb1
+
+      # Step 4: Install Maven (to build and run tests)
+      - name: Install Maven
+        run: sudo apt-get install maven -y
+
+      # Step 5: Cache Maven dependencies
       - name: Cache Maven dependencies
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('Smoke-test-repo/**/pom.xml') }}  # Reference pom.xml from Smoke-test repo
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Step 5: Install dependencies (from the main repository)
+      # Step 6: Install dependencies using Maven (this will also compile your project)
       - name: Install dependencies
         run: mvn clean install -DskipTests
 
-  
-        
-        
-      - name: Install dependencies for headless Chrome
-        run: |
-          sudo apt update
-          sudo apt install -y wget curl unzip
-          sudo apt install -y google-chrome-stable
-          sudo apt install -y libnss3 libgconf-2-4 libgdk-pixbuf2.0-0 libasound2 libx11-xcb1
-
+      # Step 7: Set up WebDriver Manager (this will automatically download the required browser driver)
       - name: Set up WebDriver Manager
-        run: |
-         mvn dependency:resolve
+        run: mvn dependency:resolve
 
-      - name: Download ChromeDriver using WebDriverManager
-        run: mvn clean install -DskipTests
-          
+      # Step 8: Run the Selenium test for a specific class (replace `com.example.GoogleTest` with your test class)
+      - name: Run Selenium Test for GoogleTest
+        run: mvn -Dtest=Testing test
+        working-directory: .
 
-
-      # Step 8: Run Tests using Maven
-      # This step will run all the tests in src/test/java
-      - name: Run Insight Test
-        run: mvn -Dtest=Insight test
-        working-directory: Smoke-test-repo
-
-      # Step 9: Upload Test Results
-      - name: Upload TestNG Results
+      # Step 9: Upload test results (optional, if you are using TestNG or Surefire for reporting)
+      - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: Smoke-test-repo/target/surefire-reports/*.xml  # Adjust according to the location of the results
+          path: target/surefire-reports/*.xml  # Adjust this based on where your test results are stored
