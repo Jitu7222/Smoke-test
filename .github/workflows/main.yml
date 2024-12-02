@@ -51,11 +51,15 @@ jobs:
         run: mvn clean install -DskipTests
         working-directory: Smoke-test-repo
         
+        
       - name: Install dependencies
         run: |
          sudo apt-get update
          sudo apt-get install -y wget unzip
-         sudo apt-get install -y google-chrome-stable
+         sudo apt-get remove --purge google-chrome-stable
+         wget https://www.slimjet.com/chrome/standalone/130.0.6778.130/google-chrome-stable_130.0.6778.130-1_amd64.deb
+         sudo dpkg -i google-chrome-stable_130.0.6778.130-1_amd64.deb
+         sudo apt-get install -f
 
 
       # Step 8: Run Tests using Maven
