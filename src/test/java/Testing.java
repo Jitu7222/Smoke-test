@@ -1,13 +1,17 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.Test;
 
 public class Testing {
-    public static void main(String[] args) {
+
+    private WebDriver driver;
+
+    @BeforeClass
+    public void setup() {
         // Set up Chrome options
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");  // Run Chrome in headless mode
@@ -20,25 +24,32 @@ public class Testing {
         System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
 
         // Initialize WebDriver
-        WebDriver driver = new ChromeDriver(options);
+        driver = new ChromeDriver(options);
+    }
 
+    @Test
+    public void testGooglePage() {
         try {
             // Navigate to Google
             driver.get("https://www.google.com");
 
-
             // Verify the page title
             String pageTitle = driver.getTitle();
             System.out.println("Page Title: " + pageTitle);
-            if (pageTitle.contains("Google")) {
-                System.out.println("Google homepage loaded successfully.");
-            } else {
-                System.out.println("Failed to load Google homepage.");
-            }
+
+            // Assert that the title contains "Google"
+            Assert.assertTrue(pageTitle.contains("Google"), "Google homepage did not load successfully.");
+            System.out.println("Google homepage loaded successfully.");
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            // Quit the browser
+            Assert.fail("Test failed due to exception: " + e.getMessage());
+        }
+    }
+
+    @AfterClass
+    public void tearDown() {
+        // Quit the browser
+        if (driver != null) {
             driver.quit();
         }
     }
