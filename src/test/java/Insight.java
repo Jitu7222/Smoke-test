@@ -46,9 +46,17 @@ public class Insight {
 
             // Navigate to the login page
             driver.get("https://app.perceptinsight.com/login");
+            System.out.println("Navigating to login page...");
 
             // Wait until the "Sign in with Microsoft" button is clickable
             WebElement signInWithMicrosoft = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[text()='Sign in with Microsoft']")));
+
+            // Debugging: Check if the element is found
+            if (signInWithMicrosoft != null) {
+                System.out.println("Found the 'Sign in with Microsoft' button.");
+            } else {
+                System.out.println("Unable to find the 'Sign in with Microsoft' button.");
+            }
 
             // Ensure the WebElement is not null before interacting with it
             Assert.assertNotNull(signInWithMicrosoft, "Sign in with Microsoft button is not found.");
@@ -58,6 +66,7 @@ public class Insight {
 
             // Click on the "Sign in with Microsoft" button
             signInWithMicrosoft.click();
+            System.out.println("Clicked on the 'Sign in with Microsoft' button.");
 
             // Optionally, you can add additional checks here (for example, verifying URL or element after clicking)
             System.out.println("Test passed: Button clicked successfully.");
