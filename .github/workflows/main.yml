@@ -59,6 +59,9 @@ jobs:
       - name: Set up WebDriver Manager
         run: |
          mvn dependency:resolve
+
+      - name: Download ChromeDriver using WebDriverManager
+        run: mvn clean install -DskipTests
           
 
 
