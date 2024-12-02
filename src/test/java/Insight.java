@@ -1,4 +1,4 @@
-//import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.restassured.RestAssured;
 import org.asynchttpclient.Response;
 import org.openqa.selenium.By;
@@ -15,7 +15,6 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.Set;
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Insight{
     private WebDriver driver;
@@ -41,7 +40,7 @@ public class Insight{
         driver = new ChromeDriver(options);
 
         // Set up explicit wait
-        wait = new WebDriverWait(driver, Duration.ofSeconds(1000));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         // Maximize the window (This might not work in headless mode, but you can use it to ensure compatibility)
         //driver.manage().window().maximize();
@@ -51,7 +50,7 @@ public class Insight{
     public void testNavigateToLoginPage() throws InterruptedException {
         // Navigate to the login page
         driver.get("https://app.perceptinsight.com/login");
-        Thread.sleep(2000); // Sleep for 2 seconds
+        //Thread.sleep(2000); // Sleep for 2 seconds
 
         // Click on "Sign in with Microsoft"
         WebElement signInWithMicrosoft = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[text()='Sign in with Microsoft']")));
