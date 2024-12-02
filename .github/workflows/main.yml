@@ -46,10 +46,7 @@ jobs:
       - name: Install dependencies
         run: mvn clean install -DskipTests
 
-      # Step 6: Install dependencies for Smoke-test repo (Optional, if separate dependencies are needed)
-      - name: Install dependencies for Smoke-test repo
-        run: mvn clean install -DskipTests
-        working-directory: Smoke-test-repo
+  
         
         
       - name: Install dependencies for headless Chrome
@@ -58,6 +55,10 @@ jobs:
           sudo apt install -y wget curl unzip
           sudo apt install -y google-chrome-stable
           sudo apt install -y libnss3 libgconf-2-4 libgdk-pixbuf2.0-0 libasound2 libx11-xcb1
+
+             - name: Set up WebDriver Manager
+             run: |
+            mvn dependency:resolve
           
 
 
