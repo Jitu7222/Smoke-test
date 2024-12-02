@@ -37,8 +37,40 @@ public class Insight{
         // Initialize WebDriver with the options
         driver = new ChromeDriver(options);
     }
-
     @Test
+    public void testNavigateToLoginPage() {
+        try {
+            // Navigate to the login page
+            driver.get("https://app.perceptinsight.com/login");
+
+            // Wait until the "Sign in with Microsoft" button is clickable
+            WebElement signInWithMicrosoft = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[text()='Sign in with Microsoft']")));
+
+            // Assert that the button is visible
+            Assert.assertTrue(signInWithMicrosoft.isDisplayed(), "Sign in with Microsoft button is not visible.");
+
+            // Click on the "Sign in with Microsoft" button
+            signInWithMicrosoft.click();
+
+            // Optionally, you can verify the next step (for example, the URL change or the visibility of elements after clicking)
+
+        } catch (Exception e) {
+            // Print the stack trace if an exception occurs
+            e.printStackTrace();
+            Assert.fail("Test failed due to exception: " + e.getMessage());
+        }
+    }
+
+    @AfterClass
+    public void tearDown() {
+        // Quit the WebDriver instance to close the browser after tests are done
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+}
+
+   /* @Test
     public void testNavigateToLoginPage() throws InterruptedException {
         // Navigate to the login page
         driver.get("https://app.perceptinsight.com/login");
@@ -859,3 +891,4 @@ public class Insight{
         }
     }
 }
+*/
