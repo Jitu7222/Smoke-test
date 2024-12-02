@@ -22,28 +22,20 @@ public class Insight{
     private String originalWindow;
 
     @BeforeClass
-    public void setUp() {
-        // Set up ChromeDriver using WebDriverManager
-        WebDriverManager.chromedriver().driverVersion("131.0.6778.86").setup();
+    public void setUp()  {
+        // Use WebDriverManager to automatically download and set up ChromeDriver
+        WebDriverManager.chromedriver().setup();
 
         // Set up Chrome options
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless"); // Run Chrome in headless mode
-        options.addArguments("--no-sandbox"); // Required for CI environments
-        options.addArguments("--disable-dev-shm-usage"); // Avoid issues with shared memory in Docker or CI
-//options.addArguments("--remote-debugging-port=9222"); // Optional: useful for debugging
-        options.addArguments("--disable-gpu"); // Disable GPU acceleration for headless mode
+        options.addArguments("--headless");  // Run Chrome in headless mode
+        options.addArguments("--no-sandbox");  // Required for CI environments
+        options.addArguments("--disable-dev-shm-usage");  // Avoid issues with shared memory
+        options.addArguments("--disable-gpu");  // Disable GPU acceleration for headless mode
         options.addArguments("--disable-software-rasterizer");
-        options.addArguments("--disable-dev-tools");
-        System.setProperty("org.slf4j.simpleLogger.log.org.openqa.selenium", "error");
-        // Initialize ChromeDriver with options
+
+        // Initialize WebDriver with the options
         driver = new ChromeDriver(options);
-
-        // Set up explicit wait
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        // Maximize the window (This might not work in headless mode, but you can use it to ensure compatibility)
-        //driver.manage().window().maximize();
     }
 
     @Test
