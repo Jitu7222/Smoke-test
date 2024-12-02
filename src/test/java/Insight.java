@@ -39,54 +39,6 @@ public class Insight {
     }
 
     @Test
-    public void testNavigateToLoginPage() {
-        try {
-            // Ensure driver is initialized
-            Assert.assertNotNull(driver, "WebDriver is not initialized.");
-
-            // Navigate to the login page
-            driver.get("https://app.perceptinsight.com/login");
-            System.out.println("Navigating to login page...");
-
-            // Wait until the "Sign in with Microsoft" button is clickable
-            WebElement signInWithMicrosoft = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[text()='Sign in with Microsoft']")));
-
-            // Debugging: Check if the element is found
-            if (signInWithMicrosoft != null) {
-                System.out.println("Found the 'Sign in with Microsoft' button.");
-            } else {
-                System.out.println("Unable to find the 'Sign in with Microsoft' button.");
-            }
-
-            // Ensure the WebElement is not null before interacting with it
-            Assert.assertNotNull(signInWithMicrosoft, "Sign in with Microsoft button is not found.");
-
-            // Assert that the button is visible
-            Assert.assertTrue(signInWithMicrosoft.isDisplayed(), "Sign in with Microsoft button is not visible.");
-
-            // Click on the "Sign in with Microsoft" button
-            signInWithMicrosoft.click();
-            System.out.println("Clicked on the 'Sign in with Microsoft' button.");
-
-            // Optionally, you can add additional checks here (for example, verifying URL or element after clicking)
-            System.out.println("Test passed: Button clicked successfully.");
-
-        } catch (Exception e) {
-            // Print the stack trace if an exception occurs
-            e.printStackTrace();
-            Assert.fail("Test failed due to exception: " + e.getMessage());
-        }
-    }
-
-    @AfterClass
-    public void tearDown() {
-        // Quit the WebDriver instance to close the browser after tests are done
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-}
-   /* @Test
     public void testNavigateToLoginPage() throws InterruptedException {
         // Navigate to the login page
         driver.get("https://app.perceptinsight.com/login");
@@ -150,7 +102,7 @@ public class Insight {
         Assert.assertTrue(signInButton.isDisplayed(), "Sign in button is not visible.");
         signInButton.click();
         Thread.sleep(2000); // Sleep for 2 seconds
-    }
+    }/*
 
     @Test(dependsOnMethods = "testSignInButton",alwaysRun = true)
     public void testSwitchBackToOriginalWindow() throws InterruptedException {
@@ -899,7 +851,7 @@ public class Insight {
         usersElement.click();
         Thread.sleep(10000);
     }
-
+*/
     @AfterClass
     public void tearDown() {
         if (driver != null) {
@@ -907,4 +859,3 @@ public class Insight {
         }
     }
 }
-*/
