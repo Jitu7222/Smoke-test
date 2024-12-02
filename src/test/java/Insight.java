@@ -16,13 +16,13 @@ import java.time.Duration;
 import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.Set;
 
-public class Insight{
+public class Insight {
     private WebDriver driver;
     private WebDriverWait wait;
     private String originalWindow;
 
     @BeforeClass
-    public void setUp()  {
+    public void setUp() {
         // Use WebDriverManager to automatically download and set up ChromeDriver
         WebDriverManager.chromedriver().setup();
 
@@ -37,14 +37,21 @@ public class Insight{
         // Initialize WebDriver with the options
         driver = new ChromeDriver(options);
     }
+
     @Test
     public void testNavigateToLoginPage() {
         try {
+            // Ensure driver is initialized
+            Assert.assertNotNull(driver, "WebDriver is not initialized.");
+
             // Navigate to the login page
             driver.get("https://app.perceptinsight.com/login");
 
             // Wait until the "Sign in with Microsoft" button is clickable
             WebElement signInWithMicrosoft = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[text()='Sign in with Microsoft']")));
+
+            // Ensure the WebElement is not null before interacting with it
+            Assert.assertNotNull(signInWithMicrosoft, "Sign in with Microsoft button is not found.");
 
             // Assert that the button is visible
             Assert.assertTrue(signInWithMicrosoft.isDisplayed(), "Sign in with Microsoft button is not visible.");
@@ -52,7 +59,8 @@ public class Insight{
             // Click on the "Sign in with Microsoft" button
             signInWithMicrosoft.click();
 
-            // Optionally, you can verify the next step (for example, the URL change or the visibility of elements after clicking)
+            // Optionally, you can add additional checks here (for example, verifying URL or element after clicking)
+            System.out.println("Test passed: Button clicked successfully.");
 
         } catch (Exception e) {
             // Print the stack trace if an exception occurs
@@ -69,7 +77,6 @@ public class Insight{
         }
     }
 }
-
    /* @Test
     public void testNavigateToLoginPage() throws InterruptedException {
         // Navigate to the login page
