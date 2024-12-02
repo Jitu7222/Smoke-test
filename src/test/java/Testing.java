@@ -4,8 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
@@ -14,7 +12,6 @@ import org.testng.annotations.Test;
 public class Testing {
 
     private WebDriver driver;
-    private WebDriverWait wait;
 
     @BeforeClass
     public void setup() {
@@ -31,7 +28,6 @@ public class Testing {
 
         // Initialize WebDriver with the options
         driver = new ChromeDriver(options);
-
     }
 
     @Test
@@ -47,18 +43,21 @@ public class Testing {
             // Find the "Sign in with Microsoft" element
             WebElement signInWithMicrosoft = driver.findElement(By.xpath("//p[text()='Sign in with Microsoft']"));
 
-            // Check if the element is null before interacting with it
-            if (signInWithMicrosoft != null) {
-                Assert.assertTrue(signInWithMicrosoft.isDisplayed(), "Sign in with Microsoft button is not visible.");
-                signInWithMicrosoft.click();
-            } else {
-                System.out.println("Element not found: Sign in with Microsoft");
-                Assert.fail("Sign in with Microsoft button was not found.");
-            }
+            // Check if the element is displayed before interacting with it
+            Assert.assertTrue(signInWithMicrosoft.isDisplayed(), "Sign in with Microsoft button is not visible.");
+            signInWithMicrosoft.click();
 
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail("Test failed due to exception: " + e.getMessage());
+        }
+    }
+
+    @AfterClass
+    public void teardown() {
+        // Close the browser after the tests
+        if (driver != null) {
+            driver.quit();
         }
     }
 }
