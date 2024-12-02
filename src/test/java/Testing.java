@@ -55,9 +55,9 @@ public class Testing {
             signInWithMicrosoft.click();
             System.out.println("Clicked on the 'Sign in with Microsoft' button.");
 
-            // You can add more assertions here after the click, for example, checking for a redirect
-
         } catch (Exception e) {
+            // Catching exception and printing stack trace
+            System.err.println("Exception occurred during test execution: " + e.getMessage());
             e.printStackTrace();
             Assert.fail("Test failed due to exception: " + e.getMessage());
         }
