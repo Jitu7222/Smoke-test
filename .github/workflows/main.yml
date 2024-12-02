@@ -51,11 +51,25 @@ jobs:
         run: mvn clean install -DskipTests
         working-directory: Smoke-test-repo
         
-      - name: Install dependencies
+        
+      - name: Install Google Chrome Stable version
         run: |
-         sudo apt-get update
-         sudo apt-get install -y wget unzip
-         sudo apt-get install -y google-chrome-stable
+          # Update package list and install necessary utilities
+          sudo apt-get update
+          sudo apt-get install -y wget curl unzip
+
+          # Download the Google Chrome stable version .deb package
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+          # Install the downloaded .deb package
+          sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+          # Fix any broken dependencies
+          sudo apt-get install -f
+
+          # Verify Chrome installation
+          google-chrome-stable --version
+          
 
 
       # Step 8: Run Tests using Maven
