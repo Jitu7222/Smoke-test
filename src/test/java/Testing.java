@@ -34,18 +34,16 @@ public class Testing {
     public void testGooglePage() {
         try {
             // Navigate to the website
-            driver.get("https://app.perceptinsight.com");
+            driver.get("https://www.ebay.com/");
 
             // Verify the page title
             String pageTitle = driver.getTitle();
             System.out.println("Page Title: " + pageTitle);
+            Thread.sleep(10000);
 
             // Find the "Sign in with Microsoft" element
-            WebElement signInWithMicrosoft = driver.findElement(By.xpath("//p[text()='Sign in with Microsoft']"));
+            WebElement exploreLink = driver.findElement(By.xpath("//a[text()='Explore (New!)']"));
 
-            // Check if the element is displayed before interacting with it
-            Assert.assertTrue(signInWithMicrosoft.isDisplayed(), "Sign in with Microsoft button is not visible.");
-            signInWithMicrosoft.click();
 
         } catch (Exception e) {
             e.printStackTrace();
