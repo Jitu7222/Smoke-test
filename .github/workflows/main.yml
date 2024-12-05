@@ -64,7 +64,7 @@ jobs:
 
       # Step 9: Upload test results (optional, if you are using TestNG or Surefire for reporting)
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
          name: build-output
          path: build/output.txt
