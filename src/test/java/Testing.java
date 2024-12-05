@@ -43,6 +43,7 @@ public class Testing {
 
             // Find the "Sign in with Microsoft" element
             WebElement exploreLink = driver.findElement(By.xpath("//a[text()='Explore (New!)']"));
+            exploreLink.click();
 
 
         } catch (Exception e) {
