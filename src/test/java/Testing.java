@@ -1,17 +1,19 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.restassured.RestAssured;
+import org.asynchttpclient.Response;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import java.time.Duration;
+import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.Set;
 
 public class Testing {
@@ -21,24 +23,26 @@ public class Testing {
 
     @BeforeClass
     public void setUp() {
-        // Set up ChromeDriver using WebDriverManager
+            // Set up ChromeDriver using WebDriverManager
+            WebDriverManager.chromedriver().setup();
 
-        // Set ChromeOptions to run in headless mode
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless"); // Enable headless mode
-        options.addArguments("--disable-gpu"); // Disable GPU (recommended for headless mode)
-        options.addArguments("--window-size=1920x1080"); // Set window size to prevent issues with headless
+            // Set Chrome options to run in headless mode
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");            // Enable headless mode
+            options.addArguments("--disable-gpu");        // Disable GPU hardware acceleration (optional)
+            options.addArguments("--window-size=1920x1080"); // Set the window size (optional but recommended for headless)
 
-        // Initialize the driver with the headless options
-        driver = new ChromeDriver(options);
+            // Initialize the ChromeDriver with the options
+            driver = new ChromeDriver(options);
 
-        // Set up WebDriverWait
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            // Initialize WebDriverWait
+            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        // Maximize the window (optional, but recommended for non-headless)
-        driver.manage().window().maximize();
-    }
+            // Maximize window (optional, as headless mode ignores this)
+            driver.manage().window().maximize(); // This line is redundant in headless mode, but can be kept for non-headless fallback
 
+            // Perform any other setup steps needed
+        }
     @Test
     public void testNavigateToLoginPage() throws InterruptedException {
         // Navigate to the login page
@@ -46,69 +50,57 @@ public class Testing {
         Thread.sleep(2000); // Sleep for 2 seconds
 
         // Click on "Sign in with Microsoft"
-        WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Sign in with Google']")));
-        Assert.assertTrue(emailInput.isDisplayed(), "Sign in with Google button is not visible.");
-        emailInput.click();
+        WebElement signInWithMicrosoft = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[text()='Sign in with Microsoft']")));
+        Assert.assertTrue(signInWithMicrosoft.isDisplayed(), "Sign in with Microsoft button is not visible.");
+        signInWithMicrosoft.click();
         //Thread.sleep(2000); // Sleep for 2 seconds
     }
 
-    @Test(dependsOnMethods = "testNavigateToLoginPage", alwaysRun = true)
+    @Test(dependsOnMethods = "testNavigateToLoginPage",alwaysRun = true)
     public void testEmailInput() throws InterruptedException {
         // Store the original window handle
         originalWindow = driver.getWindowHandle();
-        System.out.println("Original window handle: " + originalWindow);
 
         // Wait for the new window to open and switch to it
-        wait.until(ExpectedConditions.numberOfWindowsToBe(2));  // Wait until 2 windows are open
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
         Set<String> allWindows = driver.getWindowHandles();
-
-        // Log the window handles for debugging
-        System.out.println("All open windows: " + allWindows);
 
         // Switch to the new window
         for (String window : allWindows) {
             if (!window.equals(originalWindow)) {
-                System.out.println("Switching to new window: " + window);
                 driver.switchTo().window(window);
                 break;
             }
         }
 
-        // Wait for the email input field to be visible and interact with it
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        // Locate the input field using XPath and wait for its visibility and clickability
-        WebElement emailInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='email' and @name='identifier']")));
-
-        // Optional: Click the input field to focus
-        emailInput.click();
-
-        // Clear the field and send keys to the email input
+        // Wait for the email input field to be visible
+        WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type='email'][name='loginfmt'][id='i0116']")));
+        Assert.assertTrue(emailInput.isDisplayed(), "Email input field is not visible.");
         emailInput.clear();
-        emailInput.sendKeys("psp20932@gmail.com");
+        emailInput.sendKeys("jitendra@perceptinsight.com");
     }
 
-
-    @Test(dependsOnMethods = "testEmailInput", alwaysRun = true)
+    @Test(dependsOnMethods = "testEmailInput",alwaysRun = true)
     public void testNextButton() throws InterruptedException {
         // Click on "Next"
-        WebElement nextButton = driver.findElement(By.xpath("//span[normalize-space()='Next']"));
+        WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("idSIButton9")));
         Assert.assertTrue(nextButton.isDisplayed(), "Next button is not visible.");
         nextButton.click();
         //Thread.sleep(2000); // Sleep for 2 seconds
     }
 
-    @Test(dependsOnMethods = "testNextButton", alwaysRun = true)
+    @Test(dependsOnMethods = "testNextButton",alwaysRun = true)
     public void testPasswordInput() throws InterruptedException {
         // Wait for the password field and enter the password
         WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("passwd")));
         Assert.assertTrue(passwordField.isDisplayed(), "Password field is not visible.");
         passwordField.clear();
-        passwordField.sendKeys("Dutchman@2020");
+        passwordField.sendKeys("Pearl@2030");
         //Thread.sleep(2000); // Sleep for 2 seconds
     }
 
-    @Test(dependsOnMethods = "testPasswordInput", alwaysRun = true)
+    @Test(dependsOnMethods = "testPasswordInput",alwaysRun = true)
     public void testSignInButton() throws InterruptedException {
         // Click on "Sign in"
         WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("idSIButton9")));
@@ -117,9 +109,32 @@ public class Testing {
         Thread.sleep(2000); // Sleep for 2 seconds
     }
 
+    @Test(dependsOnMethods = "testSignInButton",alwaysRun = true)
+    public void testSwitchBackToOriginalWindow() throws InterruptedException {
+        // Wait for the login process to complete
+        WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("idSIButton9"))); // Adjust this based on the next expected element after login
+        signInButton.click();
+        Thread.sleep(2000); // Sleep for 2 seconds
+
+        // Switch back to the original window
+        driver.switchTo().window(originalWindow);
+        Thread.sleep(2000); // Sleep for 2 seconds
+    }
+
+
+
+    @Test(dependsOnMethods = "testSignInButton",alwaysRun = true)
+    public void testAllReports() throws InterruptedException {
+        // All reports
+        WebElement pElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[normalize-space()='All Reports']")));
+        Assert.assertTrue(pElement.isDisplayed(), "All Reports element is not visible.");
+        pElement.click();
+        Thread.sleep(2000); // Sleep for 2 seconds
+    }
     @AfterClass
     public void tearDown() {
-        // Close the browser
-        driver.quit();
+        if (driver != null) {
+            driver.quit(); // Ensure driver is closed in the end
+        }
     }
 }
