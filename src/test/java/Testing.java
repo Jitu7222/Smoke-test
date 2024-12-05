@@ -4,10 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 public class Testing {
 
@@ -31,32 +35,24 @@ public class Testing {
     }
 
     @Test
-    public void testGooglePage() {
-        try {
-            // Navigate to the website
-            driver.get("https://www.ebay.com/");
+    public void testExploreLink() {
+        driver.get("https://www.ebay.com");
 
-            // Verify the page title
-            String pageTitle = driver.getTitle();
-            System.out.println("Page Title: " + pageTitle);
-            Thread.sleep(10000);
+        // Wait for the "Explore (New!)" link to be visible and clickable
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement exploreLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Explore (New!)']")));
 
-            // Find the "Sign in with Microsoft" element
-            WebElement exploreLink = driver.findElement(By.xpath("//a[text()='Explore (New!)']"));
-            exploreLink.click();
+        // Click on the link
+        exploreLink.click();
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail("Test failed due to exception: " + e.getMessage());
-        }
+        // Optional: Add assertion to verify if the correct page loaded
+        // Example: Assert the current URL or any other condition
+        Assert.assertTrue(driver.getCurrentUrl().contains("explore"));
     }
 
+    // Cleanup method to close the browser after the test
     @AfterClass
-    public void teardown() {
-        // Close the browser after the tests
-        if (driver != null) {
-            driver.quit();
-        }
+    public void tearDown() {
+        driver.quit();
     }
 }
