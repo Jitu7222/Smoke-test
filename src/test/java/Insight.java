@@ -23,26 +23,17 @@ public class Insight {
 
     @BeforeClass
     public void setUp() {
-        // Use WebDriverManager to automatically download and set up ChromeDriver
+        // Set up ChromeDriver using WebDriverManager
         WebDriverManager.chromedriver().setup();
-
-        // Set up Chrome options
-        ChromeOptions options = new ChromeOptions();
-       /* options.addArguments("--headless");  // Run Chrome in headless mode
-        options.addArguments("--no-sandbox");  // Required for CI environments
-        options.addArguments("--disable-dev-shm-usage");  // Avoid issues with shared memory
-        options.addArguments("--disable-gpu");  // Disable GPU acceleration for headless mode
-        options.addArguments("--disable-software-rasterizer");*/
-
-        // Initialize WebDriver with the options
-        driver = new ChromeDriver(options);
+        driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        driver.manage().window().maximize();
     }
-
     @Test
     public void testNavigateToLoginPage() throws InterruptedException {
         // Navigate to the login page
-        driver.get("https://app.perceptinsight.com/login");
-        //Thread.sleep(2000); // Sleep for 2 seconds
+        driver.get("https://app.perceptinsight.com");
+        Thread.sleep(2000); // Sleep for 2 seconds
 
         // Click on "Sign in with Microsoft"
         WebElement signInWithMicrosoft = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[text()='Sign in with Microsoft']")));
