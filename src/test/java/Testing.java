@@ -24,33 +24,36 @@ public class Testing {
 
         // Set up Chrome options
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");  // Run Chrome in headless mode
-        options.addArguments("--no-sandbox");  // Required for CI environments
-        options.addArguments("--disable-dev-shm-usage");  // Avoid issues with shared memory
-        options.addArguments("--disable-gpu");  // Disable GPU acceleration for headless mode
-        options.addArguments("--disable-software-rasterizer");
+        // Uncomment the below lines to run Chrome in headless mode (for CI/CD or background tests)
+        // options.addArguments("--headless");  // Run Chrome in headless mode
+        // options.addArguments("--no-sandbox");  // Required for CI environments
+        // options.addArguments("--disable-dev-shm-usage");  // Avoid issues with shared memory
+        // options.addArguments("--disable-gpu");  // Disable GPU acceleration for headless mode
+        // options.addArguments("--disable-software-rasterizer");
 
         // Initialize WebDriver with the options
         driver = new ChromeDriver(options);
     }
 
     @Test
-    public void testExploreLink() {
+    public void testExploreLinkClick() {
         driver.get("https://www.ebay.com");
 
-        // Wait for the "Explore (New!)" link to be visible and clickable
+        // Wait for the "Explore (New!)" link to be clickable
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement exploreLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Explore (New!)']")));
 
-        // Click on the link
+        // Click the link
         exploreLink.click();
 
-        // Optional: Add assertion to verify if the correct page loaded
-        // Example: Assert the current URL or any other condition
-        Assert.assertTrue(driver.getCurrentUrl().contains("explore"));
+        // Optional: Add assertion to verify the correct page loaded
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertTrue(currentUrl.contains("explore"), "The URL did not contain 'explore' after clicking the link. Actual URL: " + currentUrl);
+        String pageTitle = driver.getTitle();
+        Assert.assertTrue(pageTitle.contains("Explore"), "The page title did not contain 'Explore'. Actual Title: " + pageTitle);
     }
 
-    // Cleanup method to close the browser after the test
+    // Cleanup method to close the browser after all tests
     @AfterClass
     public void tearDown() {
         driver.quit();

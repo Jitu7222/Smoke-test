@@ -28,11 +28,11 @@ public class Insight {
 
         // Set up Chrome options
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");  // Run Chrome in headless mode
+       /* options.addArguments("--headless");  // Run Chrome in headless mode
         options.addArguments("--no-sandbox");  // Required for CI environments
         options.addArguments("--disable-dev-shm-usage");  // Avoid issues with shared memory
         options.addArguments("--disable-gpu");  // Disable GPU acceleration for headless mode
-        options.addArguments("--disable-software-rasterizer");
+        options.addArguments("--disable-software-rasterizer");*/
 
         // Initialize WebDriver with the options
         driver = new ChromeDriver(options);
