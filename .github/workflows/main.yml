@@ -57,6 +57,10 @@ jobs:
       - name: Set up WebDriver Manager
         run: mvn dependency:resolve
 
+ 
+      - name: Run Maven build with full stack trace and debug
+        run: mvn clean install -e -X
+
       # Step 8: Run the Selenium test for a specific class (replace `com.example.GoogleTest` with your test class)
       - name: Run Selenium Test for GoogleTest
         run: mvn -Dtest=Testing test
