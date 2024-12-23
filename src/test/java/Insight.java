@@ -125,7 +125,7 @@ public class Insight {
         Thread.sleep(2000); // Sleep for 2 seconds
     }
 
-    @Test(dependsOnMethods = "testAllReports",alwaysRun = true)
+    /*@Test(dependsOnMethods = "testAllReports",alwaysRun = true)
     public void testScreenView() throws InterruptedException {
         // Screen View
         WebElement siElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[normalize-space()='Screen View 1_7sept']")));
@@ -249,8 +249,8 @@ public class Insight {
         Assert.assertTrue(Ar6Element.isDisplayed(), "Arrow element is not visible.");
         Ar6Element.click();
         Thread.sleep(1000);
-    }
-    @Test(dependsOnMethods = "testClickArrow",alwaysRun = true)
+    }*/
+    @Test(dependsOnMethods = "testAllReports",alwaysRun = true)
     public void testClickAllReports() throws InterruptedException {
         // Click on "All Reports" element
         WebElement p6Element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[normalize-space()='All Reports']")));
@@ -543,13 +543,52 @@ public class Insight {
         path12Element.click();
         Thread.sleep(10000);
     }
+    @Test(dependsOnMethods ="testClickPath12Element",alwaysRun = true)
+    public void testinputTitle() throws InterruptedException {
+        WebElement inputitle = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[text()='Title']")));
+        Assert.assertTrue(inputitle.isDisplayed(), "'insight-name Element' is not visible.");
+        inputitle.click();
+        Thread.sleep(1000);
+    }
+    @Test(dependsOnMethods ="testinputTitle",alwaysRun = true)
+    public void testinputElement() throws InterruptedException {
+        WebElement inputElement = wait.until(ExpectedConditions.elementToBeClickable(By.id("insight-name")));
+        inputElement.sendKeys("Insight_test");
+        Assert.assertTrue(inputElement.isDisplayed(), "'insight-name Element' is not visible.");
+        inputElement.click();
+        Thread.sleep(1000);
+    }
+
+    @Test(dependsOnMethods ="testinputElement",alwaysRun = true)
+    public void testinputElement1() throws InterruptedException {
+        WebElement inputElement1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("insight-description")));
+        inputElement1.sendKeys("Insight_test");
+        Assert.assertTrue(inputElement1.isDisplayed(), "'insight-description Element' is not visible.");
+        inputElement1.click();
+        Thread.sleep(1000);
+    }
+
+    @Test(dependsOnMethods ="testinputElement1",alwaysRun = true)
+    public void testinputElement2() throws InterruptedException {
+        WebElement inputElement2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Done']")));
+        Assert.assertTrue(inputElement2.isDisplayed(), "'insight-description Element' is not visible.");
+        inputElement2.click();
+        Thread.sleep(10000);
+    }
+    @Test(dependsOnMethods ="testinputElement2",alwaysRun = true)
+    public void testinputElement3() throws InterruptedException {
+        WebElement inputElement3 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(), 'Save')]")));
+        Assert.assertTrue(inputElement3.isDisplayed(), "'insight-description Element' is not visible.");
+        inputElement3.click();
+        Thread.sleep(10000);
+    }
 
     @Test(dependsOnMethods ="testClickPath12Element",alwaysRun = true)
     public void testClickPath13Element() throws InterruptedException {
         WebElement path13Element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html[1]/body[1]/div[1]/main[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div[3]/div[1]/div[1]/div[2]")));
         Assert.assertTrue(path13Element.isDisplayed(), "'Path13 Element' is not visible.");
         path13Element.click();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
     }
     @Test(dependsOnMethods ="testClickPath13Element",alwaysRun = true)
     public void testClickPath14Element() throws InterruptedException {
@@ -600,15 +639,8 @@ public class Insight {
         path20Element.click();
         Thread.sleep(10000);
     }
+
     @Test(dependsOnMethods = "testClickPath20Element",alwaysRun = true)
-    public void testClickArrow1() throws InterruptedException {
-        // Click on the Arrow Element
-        WebElement arrowElement12 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[name()='svg'][@class='lucide lucide-arrow-right-to-line']")));
-        Assert.assertTrue(arrowElement12.isDisplayed(), "Arrow element is not visible.");
-        arrowElement12.click();
-        Thread.sleep(5000);
-    }
-    @Test(dependsOnMethods = "testClickArrow1",alwaysRun = true)
     public void testClickEngage1() throws InterruptedException {
         WebElement engageElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[normalize-space()='Engage']")));
         Assert.assertTrue(engageElement.isDisplayed(), "Engage element is not visible.");

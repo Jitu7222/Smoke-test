@@ -323,6 +323,28 @@ public class Pixel {
 
             Thread.sleep(1000);
 
+
+            WebElement inputElement = driver.findElement(By.id("insight-name"));
+            inputElement.sendKeys("Insight_test");
+            inputElement.sendKeys(Keys.RETURN);
+            Thread.sleep(10000);
+
+            WebElement textareaElement = driver.findElement(By.id("insight-description"));
+            textareaElement.sendKeys("Insight_test");
+            textareaElement.sendKeys(Keys.RETURN);
+            Thread.sleep(10000);
+
+            WebElement buttonElement1 = driver.findElement(By.xpath("//button[text()='Done']"));
+            buttonElement1.click();
+            Thread.sleep(1000);
+
+            WebElement spanElement1 = driver.findElement(By.xpath("//span[contains(text(), 'Save')]"));
+            spanElement1.click();
+            Thread.sleep(10000);
+
+
+
+
             WebElement spanElementByXPath = driver.findElement(By.xpath("/html[1]/body[1]/div[1]/main[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div[3]/div[1]/div[1]/div[2]"));
             spanElementByXPath.click();
 
